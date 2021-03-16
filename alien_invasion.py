@@ -72,6 +72,7 @@ class AlienInvasion:
         """start a new game when the player clicks play"""
         if self.play_button.rect.collidepoint(mouse_pos):
             self.stats.game_active = True
+            self.settings.initialize_dynamic_settings()
             pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
