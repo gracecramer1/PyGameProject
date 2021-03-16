@@ -75,6 +75,7 @@ class AlienInvasion:
         """start a new game when the player clicks play"""
         if self.play_button.rect.collidepoint(mouse_pos):
             self.stats.game_active = True
+            self.sb.prep_score()
             self.settings.initialize_dynamic_settings()
             pygame.mouse.set_visible(False)
 
@@ -120,6 +121,8 @@ class AlienInvasion:
         # if so, get rid of the bullet and the alien
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
             self.stats.score += self.settings.alien_points
             self.sb.prep_score()
         if not self.aliens:
