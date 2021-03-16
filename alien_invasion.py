@@ -12,6 +12,8 @@ from alien import Alien
 
 from game_stats import GameStats
 
+from button import Button
+
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior"""
@@ -41,6 +43,8 @@ class AlienInvasion:
 
         self._create_fleet()
 
+        self.play_button = Button(self, "Play")
+
     def run_game(self):
         """start the main loop for the game"""
         while True:
@@ -49,7 +53,7 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
-                self._update_screen()
+            self._update_screen()
 
     def _check_events(self):
         """respond to keypresses and mouse events"""
@@ -161,7 +165,6 @@ class AlienInvasion:
             # creat a new fleet and cetner the ship
             self._create_fleet()
             self.ship.center_ship()
-
             # pause
             sleep(0.5)
         else:
@@ -197,6 +200,10 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+        # draw the  play button iff the game is inactive
+        if not self.stats.game_active:
+            self.play_button.draw_button()
+
         # make the most revently drawn screen visible
         pygame.display.flip()
 
